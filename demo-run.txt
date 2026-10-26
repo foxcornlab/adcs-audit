@@ -1,0 +1,24 @@
+$ git clone https://github.com/foxcornlab/adcs-audit && cd adcs-audit
+$ ./adcsaudit.py --offline tests/fixtures/esc1_esc8.json
+[HIGH] ESC1: template 'UserAuth'
+    enrollee-supplied subject with client-auth EKU and enroll rights for
+    Authenticated Users, no manager approval — lets the grantee request a cert
+    as any principal, including DA
+
+[HIGH] ESC4: template 'UserAuth'
+    template object ACL grants write access to Authenticated Users — they can
+    edit the template to issue themselves arbitrary certs
+
+[HIGH] ESC8: CA 'CorpCA'
+    non-TLS enrollment endpoint:
+    http://corp-ca.corp.local/certsrv/certfnsh.asp — NTLM relay to the HTTP
+    enrollment service is possible (ntlmrelayx style)
+
+3 finding(s) across 2 entries
+$ ./adcsaudit.py --offline tests/fixtures/clean_template.json
+no findings — templates look clean (from this export)
+0 finding(s) across 1 entries
+$ python3 -m unittest discover -s tests
+Ran 24 tests in 0.364s
+
+OK
