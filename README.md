@@ -73,6 +73,10 @@ $ ./adcsaudit.py --offline tests/fixtures/esc1_esc8.json
 3 finding(s) across 2 entries
 ```
 
+## In action
+
+![demo](demo.png)
+
 ## Export format
 
 Any entry with `objectClass: pKICertificateTemplate` is checked as a
