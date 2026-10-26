@@ -67,7 +67,7 @@ $ ./adcsaudit.py --offline tests/fixtures/esc1_esc8.json
     edit the template to issue themselves arbitrary certs
 
 [HIGH] ESC8: CA 'CorpCA'
-    non-TLS enrollment endpoint: http://corp-ca.corp.local/certsrv/certfnsh.asp ,
+    non-TLS enrollment endpoint: http://corp-ca.corp.local/certsrv/certfnsh.asp
     NTLM relay to the HTTP enrollment service is possible (ntlmrelayx style)
 
 3 finding(s) across 2 entries
