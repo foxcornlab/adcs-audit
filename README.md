@@ -3,22 +3,22 @@
 Offline auditor for Active Directory Certificate Services (AD CS)
 misconfigurations. Feed it an LDAP export (LDIF or JSON) of your
 Certificate Templates and Enrollment Services objects and it reports the
-ESC1–ESC8 style attack paths a low-privileged user could take.
+ESC1,ESC8 style attack paths a low-privileged user could take.
 
 ## What it checks
 
-- **ESC1** — enrollee-supplied subject + client-authentication EKU +
+- **ESC1**, enrollee-supplied subject + client-authentication EKU +
   enroll rights for a low-privileged group, no manager approval: anyone
   in that group can request a certificate as any principal, including
   Domain Admin.
-- **ESC2** — Any Purpose EKU combined with low-privilege enroll rights.
-- **ESC3** — Certificate Request Agent EKU with low-privilege enroll
+- **ESC2**, Any Purpose EKU combined with low-privilege enroll rights.
+- **ESC3**, Certificate Request Agent EKU with low-privilege enroll
   rights (enables on-behalf-of enrollment).
-- **ESC4** — low-privileged principals hold write access on the template
+- **ESC4**, low-privileged principals hold write access on the template
   object itself.
-- **ESC7** — low-privileged principals hold CA management rights
+- **ESC7**, low-privileged principals hold CA management rights
   (ManageCA / ManageCertificates).
-- **ESC8** — enrollment endpoints published over plain `http://`.
+- **ESC8**, enrollment endpoints published over plain `http://`.
 
 Security descriptors are read from the `nTSecurityDescriptor` SDDL text
 in the export; trustees are mapped from well-known SIDs and SDDL tokens
@@ -59,15 +59,15 @@ Exit codes: `0` clean, `1` findings, `2` usage or input error.
 $ ./adcsaudit.py --offline tests/fixtures/esc1_esc8.json
 [HIGH] ESC1: template 'UserAuth'
     enrollee-supplied subject with client-auth EKU and enroll rights for
-    Authenticated Users, no manager approval — lets the grantee request a cert
+    Authenticated Users, no manager approval, lets the grantee request a cert
     as any principal, including DA
 
 [HIGH] ESC4: template 'UserAuth'
-    template object ACL grants write access to Authenticated Users — they can
+    template object ACL grants write access to Authenticated Users, they can
     edit the template to issue themselves arbitrary certs
 
 [HIGH] ESC8: CA 'CorpCA'
-    non-TLS enrollment endpoint: http://corp-ca.corp.local/certsrv/certfnsh.asp —
+    non-TLS enrollment endpoint: http://corp-ca.corp.local/certsrv/certfnsh.asp ,
     NTLM relay to the HTTP enrollment service is possible (ntlmrelayx style)
 
 3 finding(s) across 2 entries
@@ -89,7 +89,7 @@ template; `pKIEnrollmentService` as a CA. Attributes read:
 
 ## Scope
 
-Audits exported data only — it never talks to a domain controller.
+Audits exported data only, it never talks to a domain controller.
 Authorized testing only. Use against systems you own or are permitted
 to test.
 
